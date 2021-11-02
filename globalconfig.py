@@ -27,3 +27,6 @@ gconfig['ACTION_MAP'] = {0:'LEFT', 1:'UP', 2:'RIGHT', 3:'DOWN'}
 # Sleep time after sending action to the game
 # This is for avoiding error when you paly too fast
 gconfig['ACTION_SLEEP'] = 0.05
+
+# Scale the reward for the q-value approximator not to learn too big values
+gconfig['REWARD_SCALE'] = 1/2048

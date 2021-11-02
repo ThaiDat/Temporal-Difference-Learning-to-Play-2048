@@ -32,6 +32,6 @@ class GameEnv:
         s = self.driver.get_board()
         score = self.driver.get_score()
         done = self.driver.is_end()
-        r = score - self.score
+        r = (score - self.score) * gconfig['REWARD_SCALE']
         self.score = score
         return s, r, done
