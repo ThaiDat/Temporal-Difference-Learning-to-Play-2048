@@ -37,3 +37,6 @@ gconfig['EXPERIENCE_BUFFER'] = 256
 # Minimum of experiences to sample from
 # If buffer has less experience than this number, sample nothing
 gconfig['MIN_EXPERIENCE'] = 64
+
+# Length of one-hot encoded cell. Should be >= 11 as 2048->10
+gconfig['CHANEL_ENCODED'] = 16

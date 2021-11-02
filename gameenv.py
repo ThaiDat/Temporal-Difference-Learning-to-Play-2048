@@ -1,4 +1,6 @@
 from globalconfig import gconfig
+import numpy as np
+from itertools import product
 
 
 class GameEnv:
@@ -21,7 +23,7 @@ class GameEnv:
         '''
         self.driver.restart() if self.driver.connected else self.driver.connect()
         self.score = 0
-        return self.driver.get_board()
+        return self.__process_board(self.driver.get_board())
 
 
     def step(self, action):
@@ -31,10 +33,26 @@ class GameEnv:
         action: action the agent sent to the environment
         return (observation after doing action, reward from action, is terminal state)
         '''
+        # Make action and retrieve information
         self.driver.make_move(action)
-        s = self.driver.get_board()
+        board = self.driver.get_board()
         score = self.driver.get_score()
         done = self.driver.is_end()
-        r = (score - self.score) * gconfig['REWARD_SCALE']
+        # Process information
+        s = self.__process_board(board)
+        r = (score - self.score) * gconfig['REWARD_SCALE']        
         self.score = score
         return s, r, done
+
+    def __process_board(self, board):
+        '''
+        Transform board to state observation
+        We will use one-hot encoded for each cell
+        return numpy array of shape 16x4x4
+        '''
+        state = np.zeros((gconfig['CHANEL_ENCODED'], 4, 4))
+        for i, j in product(range(4), range(4)):
+            cell = board[i][j]
+            pos = pos = int(np.log2(cell)) if cell > 0 else 0
+            state[pos, i, j] = 1
+        return state
