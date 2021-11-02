@@ -18,6 +18,13 @@ class GameDriver2048:
         pass
 
     @abstractmethod
+    def get_score(self):
+        '''
+        Get the current score of the game
+        '''
+        pass
+
+    @abstractmethod
     def get_board(self):
         '''Get current board state'''
         pass
@@ -58,6 +65,15 @@ class WebGameDriver2048(GameDriver2048):
         self.actor = ActionChains(self.driver)
         self.__get_elements()
         self.connected = True
+
+    @abstractmethod
+    def get_score(self):
+        '''
+        Get the current score of the game
+        '''
+        # score_nums = [current score, bonus score]
+        score_nums = self.__extract_positive_number(self.score.text)
+        return 0 if len(score_nums) == 0 else score_nums[0]
 
     def get_board(self):
         '''
@@ -100,10 +116,10 @@ class WebGameDriver2048(GameDriver2048):
         '''
         Helper function that extract all positive number from string (exclude negative sign and 0)
         s: input string
-        return list of all number
+        n: maximum numbers to extract. This function will return after discover first n numbers
+        return list of numbers (len <= n)
         '''
-        nums = list()
-        num = 0
+        nums = list(); num = 0
         for c in s:
             if c.isdigit():
                 num = num * 10 + int(c)
@@ -123,4 +139,5 @@ class WebGameDriver2048(GameDriver2048):
         self.tile_container = container.find_element(By.CLASS_NAME, 'tile-container')
         self.game_message = container.find_element(By.CLASS_NAME, 'game-message')
         self.restart_button = container.find_element(By.CLASS_NAME, 'restart-button')
+        self.score = container.find_element(By.CLASS_NAME, 'score-container')
         
