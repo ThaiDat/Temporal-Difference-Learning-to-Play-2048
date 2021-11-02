@@ -23,7 +23,7 @@ class ExperienceReplay:
         '''
         return len(self.buffer)
 
-    def push(self, s, a, sp, r):
+    def push(self, s, a, sp, r, done):
         '''
         Push new experience to buffer
         s: state
@@ -31,7 +31,7 @@ class ExperienceReplay:
         sp: next state
         r: reward
         '''
-        new_item = (s, a, sp, r)
+        new_item = (s, a, sp, r, done)
         if len(self.buffer) < self.buffer_size:
             self.buffer.append(new_item)
         else:
@@ -48,10 +48,11 @@ class ExperienceReplay:
         if len(self.buffer) < self.min_exp:
             return list()
         samples = sample(self.buffer, size)
-        states = []; actions = []; rewards = []; nxt_states = []
-        for s, a, r, sp in samples:
+        states = []; actions = []; rewards = []; nxt_states = []; dones = []
+        for s, a, r, sp, done in samples:
             states.append(s)
             actions.append(a)
             rewards.append(r)
             nxt_states.append(sp)
-        return states, actions, rewards, nxt_states
+            dones.append(done)
+        return states, actions, rewards, nxt_states, dones
