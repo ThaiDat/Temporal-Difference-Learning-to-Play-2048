@@ -40,3 +40,6 @@ gconfig['MIN_EXPERIENCE'] = 64
 
 # Length of one-hot encoded cell. Should be >= 11 as 2048->10
 gconfig['CHANEL_ENCODED'] = 16
+
+# Device to train network on. cuda or cpu
+gconfig['DEVICE'] = 'cpu'
