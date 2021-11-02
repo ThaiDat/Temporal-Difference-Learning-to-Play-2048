@@ -1,3 +1,4 @@
+from globalconfig import gconfig
 from random import sample
 
 
@@ -5,7 +6,7 @@ class ExperienceReplay:
     '''
     Experience replay buffer
     '''
-    def __init__(self, buffer_size=256, min_exp=64):
+    def __init__(self, buffer_size=gconfig['EXPERIENCE_BUFFER'], min_exp=gconfig['MIN_EXPERIENCE']):
         '''
         buffer_size: Max number of experiences recorded. If overflow, oldest experience will be discarded
         min_exp: minimum number of experiences required to start sampling
@@ -36,8 +37,15 @@ class ExperienceReplay:
         '''
         Get samples from experiences. If buffer have not enough experiences, return empty list
         size: Number of samples
-        return list of <size> samples
+        return state bach, action batch, next state batch, reward batch
         '''
         if len(self.buffer) < self.min_exp:
             return list()
-        return sample(self.buffer, size)
+        samples = sample(self.buffer, size)
+        states = []; actions = []; rewards = []; nxt_states = []
+        for s, a, r, sp in samples:
+            states.append(s)
+            actions.append(a)
+            rewards.append(r)
+            nxt_states.append(sp)
+        return states, actions, rewards, nxt_states

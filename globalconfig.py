@@ -30,3 +30,10 @@ gconfig['ACTION_SLEEP'] = 0.05
 
 # Scale the reward for the q-value approximator not to learn too big values
 gconfig['REWARD_SCALE'] = 1/2048
+
+# Size of experiences replay
+gconfig['EXPERIENCE_BUFFER'] = 256
+
+# Minimum of experiences to sample from
+# If buffer has less experience than this number, sample nothing
+gconfig['MIN_EXPERIENCE'] = 64
