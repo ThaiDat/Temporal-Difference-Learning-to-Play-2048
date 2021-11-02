@@ -51,6 +51,12 @@ class WebGameDriver2048(GameDriver2048):
     '''
 
     def __init__(self, gameurl=gconfig['GAME_URL'], browser=gconfig['BROWSER'], driver_file=gconfig['BROWSER_DRIVER_FILE']):
+        '''
+        gameurl: web url to play game.
+        browser: Name of the browser used to play the game
+        driver_file: path to the driver to control the browser
+        If the developer do not change, they will use the value in global config by default
+        '''
         self.connected = False
         self.url = gameurl
         self.driver = getattr(webdriver, browser)(executable_path=driver_file)

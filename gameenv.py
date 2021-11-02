@@ -7,6 +7,9 @@ class GameEnv:
     '''
 
     def __init__(self, driver):
+        '''
+        driver: game driver to attach to the environment. The environment will use this driver to interact with the game
+        '''
         self.driver = driver
         self.score = 0
 
