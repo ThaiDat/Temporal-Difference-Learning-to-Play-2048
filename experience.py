@@ -17,6 +17,12 @@ class ExperienceReplay:
         self.buffer = list()
         self.__i = 0
 
+    def __len__(self):
+        '''
+        Return the size of buffer
+        '''
+        return len(self.buffer)
+
     def push(self, s, a, sp, r):
         '''
         Push new experience to buffer
