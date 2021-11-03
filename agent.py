@@ -1,10 +1,11 @@
+from globalconfig import gconfig
 import torch
 from torch import nn
 
 
 class DQN2048Agent(nn.Module):
     '''Pytorch network to learn to play 2048'''
-    def __init__(self, epsilon=0):
+    def __init__(self, epsilon=gconfig['INITIAL_EPSILON']):
         '''
         epsilon: initial value of epsilon greedy policy
         '''
@@ -25,7 +26,7 @@ class DQN2048Agent(nn.Module):
             nn.ReLU(),
             nn.Linear(128, 64), # 64
             nn.ReLU(),
-            nn.Linear(64, n_actions) # 4
+            nn.Linear(64, self.n_actions) # 4
         )
 
     def forward(self, states):
