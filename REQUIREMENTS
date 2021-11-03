@@ -1,5 +1,6 @@
 --find-links https://download.pytorch.org/whl/cu113/torch_stable.html
 selenium==4.0.0
+matplotlib==3.4.3
 torch==1.10.0+cu115
 torchvision==0.11.1+cu115
 torchaudio===0.10.0+cu115
