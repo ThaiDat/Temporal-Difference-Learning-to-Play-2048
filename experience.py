@@ -41,12 +41,12 @@ class ExperienceReplay:
 
     def sample(self, size):
         '''
-        Get samples from experiences. If buffer have not enough experiences, return empty list
+        Get samples from experiences. If buffer have not enough experiences, return None
         size: Number of samples
         return state bach, action batch, next state batch, reward batch
         '''
         if len(self.buffer) < self.min_exp:
-            return list()
+            return None
         samples = sample(self.buffer, size)
         states = []; actions = []; rewards = []; nxt_states = []; dones = []
         for s, a, r, sp, done in samples:
