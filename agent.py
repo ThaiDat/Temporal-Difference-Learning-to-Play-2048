@@ -13,12 +13,12 @@ class DQN2048Agent(nn.Module):
         self.epsilon = epsilon
         self.n_actions = 4
         self.qnetwork = nn.Sequential(
-            nn.Conv2d(16, 32, 2), # 3x3x32
+            nn.Conv2d(16, 64, 2), # 3x3x64
             nn.ReLU(),
-            nn.Conv2d(32, 64, 2), # 2x2x64
+            nn.Conv2d(64, 128, 2), # 2x2x128
             nn.ReLU(),
             nn.Flatten(), # 256
-            nn.Linear(256, 256), # 256
+            nn.Linear(512, 256), # 256
             nn.ReLU(),
             nn.Linear(256, 128), # 128
             nn.ReLU(),

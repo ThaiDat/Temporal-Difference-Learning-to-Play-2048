@@ -109,6 +109,7 @@ class WebGameDriver2048(GameDriver2048):
     def restart(self):
         '''Restart the game'''
         self.restart_button.click()
+        time.sleep(gconfig['ACTION_SLEEP'])
         self.__get_elements()
 
     def is_end(self):
