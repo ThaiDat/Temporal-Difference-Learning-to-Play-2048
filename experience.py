@@ -56,3 +56,22 @@ class ExperienceReplay:
             nxt_states.append(sp)
             dones.append(done)
         return states, actions, rewards, nxt_states, dones
+
+    def fill(self, env):
+        '''
+        Randomly fill the remaining slots in buffer with the experiences obtained from the environment
+        Leave no change if buffer is already full
+        env: environment
+        '''
+        remaining = self.buffer_size - len(self.buffer)
+        if remaining <= 0:
+            return
+        s = env.reset()
+        while remaining > 0:
+            a = np.random.randint(env.n_actions)
+            sp, r, done = env.step(a)
+            new_item = (s, a, sp, r, done)
+            self.buffer.append(new_item)
+            s = env.reset() if done else sp
+            remaining -= 1
+        self.__i = 0
