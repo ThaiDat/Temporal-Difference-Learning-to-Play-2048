@@ -1,5 +1,5 @@
 from globalconfig import gconfig
-from random import sample
+from random import sample, randint
 
 
 class ExperienceReplay:
@@ -23,7 +23,7 @@ class ExperienceReplay:
         '''
         return len(self.buffer)
 
-    def push(self, s, a, sp, r, done):
+    def push(self, s, a, r, sp, done):
         '''
         Push new experience to buffer
         s: state
@@ -31,7 +31,7 @@ class ExperienceReplay:
         sp: next state
         r: reward
         '''
-        new_item = (s, a, sp, r, done)
+        new_item = (s, a, r, sp, done)
         if len(self.buffer) < self.buffer_size:
             self.buffer.append(new_item)
         else:
@@ -68,9 +68,9 @@ class ExperienceReplay:
             return
         s = env.reset()
         while remaining > 0:
-            a = np.random.randint(env.n_actions)
+            a = randint(0, env.n_actions-1)
             sp, r, done = env.step(a)
-            new_item = (s, a, sp, r, done)
+            new_item = (s, a, r, sp, done)
             self.buffer.append(new_item)
             s = env.reset() if done else sp
             remaining -= 1
