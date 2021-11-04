@@ -14,6 +14,8 @@ class GameEnv:
         '''
         self.driver = driver
         self.score = 0
+        self.state_space = (gconfig['CHANEL_ENCODED'], 4, 4)
+        self.n_actions = 4
 
 
     def reset(self):
@@ -50,7 +52,7 @@ class GameEnv:
         We will use one-hot encoded for each cell
         return numpy array of shape 16x4x4
         '''
-        state = np.zeros((gconfig['CHANEL_ENCODED'], 4, 4))
+        state = np.zeros(self.state_space)
         for i, j in product(range(4), range(4)):
             cell = board[i][j]
             pos = pos = int(np.log2(cell)) if cell > 0 else 0
