@@ -1,9 +1,10 @@
 from globalconfig import gconfig
-from gamedriver import WebGameDriver2048
+from gamedriver import WebGameDriver2048, SilentGameDriver2048
 from gameenv import GameEnv
 from experience import ExperienceReplay
 from agent import DQN2048Agent
 from matplotlib import pyplot as plt
+from tqdm import tqdm
 import numpy as np
 import gc
 import torch
@@ -54,38 +55,33 @@ if __name__ == '__main__':
     min_epsilon = gconfig['MIN_EPSILON']
     epsiolon_lin_decay = gconfig['EPSILON_LINEAR_DECAY']
     max_grad_norm = gconfig['MAX_GRADIENT_NORM']
+    monitors = gconfig['MONITOR_RANGE']
 
     # Monitoring
     plt.ion()
-    train_fig, train_axs = plt.subplots(2, 1, sharex=True, figsize=(5, 6))
-    train_axs[0].set_title('Gradient Norm')
-    train_axs[1].set_title('TD Loss')
-    train_fig.suptitle('Epsion = %f'%gconfig['INITIAL_EPSILON'])
-    train_grads = []; train_losses = []
-
-    game_fig, game_axs = plt.subplots(2, 1, sharex=True, figsize=(5, 6))
-    game_axs[0].set_title('Max rewards per game')
-    game_axs[1].set_title('Scores per game')
+    fig, axs = plt.subplots(2, 2, figsize=(10, 6))
+    axs[0][0].set_title('Gradient Norm')
+    axs[1][0].set_title('TD Loss')
+    axs[0][1].set_title('Max rewards per game')
+    axs[1][1].set_title('Scores per game')
     game_scores = []; game_max_rewards = []
-
-    # This position is my screen specific
-    train_fig.canvas.manager.window.move(*gconfig['TRAIN_FIGURE_POSITION'])
-    game_fig.canvas.manager.window.move(*gconfig['GAME_FIGURE_POSITION'])
+    train_grads = []; train_losses = []
+    fig.suptitle('Epsion = %f'%gconfig['INITIAL_EPSILON'])
     plt.show()
 
     # init elements for training
-    env = GameEnv(WebGameDriver2048())
+    env = GameEnv(SilentGameDriver2048())
     agent = DQN2048Agent(gconfig['INITIAL_EPSILON']).to(device)
     target_network = DQN2048Agent().to(device)
     target_network.load_state_dict(agent.state_dict())
     memory = ExperienceReplay()
+    memory.fill(env)
     optimizer = getattr(torch.optim, gconfig['OPTIMIZER'])(agent.parameters(), lr=gconfig['LEARNING_RATE'])
 
     # train loop
     gc.collect()
-    episode_reward = 0
     s = env.reset()
-    for i in range(gconfig['TRAIN_STEPS']):
+    for i in tqdm(range(gconfig['TRAIN_STEPS'])):
         # Play
         st = torch.tensor(s, device=device, dtype=torch.float).unsqueeze(0)
         a = None
@@ -108,12 +104,7 @@ if __name__ == '__main__':
             train_losses.append(loss.data.cpu().item())
         
         # Logging
-        episode_reward += r
         max_tile = np.max(env.driver.get_board())
-
-        # next step
-        agent.epsilon = max(agent.epsilon - epsiolon_lin_decay, min_epsilon)
-        s = env.reset() if done else sp
 
         # Update network
         if i % gconfig['UPDATE_STEPS'] == 0:
@@ -121,26 +112,38 @@ if __name__ == '__main__':
         
         # Monitoring
         if done:
-            game_scores.append(episode_reward)
+            game_scores.append(env.driver.get_score())
             game_max_rewards.append(max_tile)
-            episode_reward = 0
             # Monitor after an game end
-            game_axs[0].cla()
-            game_axs[0].plot(game_max_rewards)
-            game_axs[0].set_title('Max rewards per game')
-            game_axs[1].cla()
-            game_axs[1].plot(game_scores)
-            game_axs[1].set_title('Scores per game')
-            game_fig.canvas.draw()
-            game_fig.canvas.flush_events()
+            axs[0][1].cla()
+            axs[0][1].plot(game_max_rewards[monitors:])
+            axs[0][1].set_title('Max rewards per game')
+            axs[1][1].cla()
+            axs[1][1].plot(game_scores[monitors:])
+            axs[1][1].set_title('Scores per game')
+            fig.canvas.draw()
+            fig.canvas.flush_events()
 
-        if i % gconfig['LOG_STEPS'] == 0:
-            train_axs[0].cla()
-            train_axs[0].plot(train_grads)
-            train_axs[0].set_title('Gradient Norm')
-            train_axs[1].cla()
-            train_axs[1].plot(train_losses)
-            train_axs[1].set_title('TD Loss')
-            train_fig.suptitle('Epsion = %f'%agent.epsilon)
-            train_fig.canvas.draw()
-            train_fig.canvas.flush_events()
+        if i % gconfig['MONITOR_STEPS'] == 0:
+            axs[0][0].cla()
+            axs[0][0].plot(train_grads[monitors:])
+            axs[0][0].set_title('Gradient Norm')
+            axs[1][0].cla()
+            axs[1][0].plot(train_losses[monitors:])
+            axs[1][0].set_title('TD Loss')
+            fig.suptitle('Epsion = %f'%agent.epsilon)
+            fig.canvas.draw()
+            fig.canvas.flush_events()
+
+        # Backup
+        if i % gconfig['BACKUP_STEPS']:
+            torch.save(target_network.state_dict(), gconfig['BACKUP_LOCATION'])
+
+        # next step
+        agent.epsilon = max(agent.epsilon - epsiolon_lin_decay, min_epsilon)
+        s = env.reset() if done else sp
+
+    # Save the model after done
+    torch.save(target_network.state_dict(), gconfig['BACKUP_LOCATION'])
+    print('DONE')
+    plt.ioff()

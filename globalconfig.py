@@ -12,18 +12,6 @@ gconfig['BROWSER'] = 'Firefox'
 # Help this program to find and use the driver
 gconfig['BROWSER_DRIVER_FILE'] = path.join('drivers', 'geckodriver.exe')
 
-# Position of browser when open
-gconfig['BROWSER_POSITION'] = (0, 0)
-
-# Size of browser when open
-gconfig['BROWSER_SIZE'] = (500, 750)
-
-# Position of training metrics monitor on the screen
-gconfig['TRAIN_FIGURE_POSITION'] = (501, 0)
-
-# Position of game metrics monitor on the screen
-gconfig['GAME_FIGURE_POSITION'] = (1002, 0)
-
 # URL of the web game used by the environment
 gconfig['GAME_URL'] = 'https://2048game.com'
 
@@ -38,11 +26,11 @@ gconfig['ACTION_SLEEP'] = 0.02
 gconfig['REWARD_SCALE'] = 1/2048
 
 # Size of experiences replay
-gconfig['EXPERIENCE_BUFFER'] = 2048
+gconfig['EXPERIENCE_BUFFER'] = 4000
 
 # Minimum of experiences to sample from
 # If buffer has less experience than this number, sample nothing
-gconfig['MIN_EXPERIENCE'] = 1024
+gconfig['MIN_EXPERIENCE'] = 2000
 
 # Size of batch sample from experiences buffer to train
 gconfig['BATCH'] = 32
@@ -51,7 +39,7 @@ gconfig['BATCH'] = 32
 gconfig['OPTIMIZER'] = 'Adam'
 
 # Learning rate of model
-gconfig['LEARNING_RATE'] = 1e-4
+gconfig['LEARNING_RATE'] = 5e-5
 
 # Clip the gradient norm to this number.
 gconfig['MAX_GRADIENT_NORM'] = 50
@@ -66,20 +54,30 @@ gconfig['DEVICE'] = 'cuda'
 gconfig['DISCOUNTED'] = 0.99
 
 # Probability for choosing random actions while training
-gconfig['INITIAL_EPSILON'] = 1
+gconfig['INITIAL_EPSILON'] = 0.5
 
 # Minimum probability for choosing random actions while training. This is for keeping exploring to find better policy
-gconfig['MIN_EPSILON'] = 0.1
+gconfig['MIN_EPSILON'] = 0.05
 
 # The epsilon decrement every steps until reach minimum value
 # Epsilon need decay overtime (less exploration, more exploitation). 
-gconfig['EPSILON_LINEAR_DECAY'] = (1 - 0.1) / 7000
+gconfig['EPSILON_LINEAR_DECAY'] = (0.5 - 0.05) / 8000
+
+# We will just monitor some number of last steps. For example -500 means that only last 500 steps will display on the screen
+gconfig['MONITOR_RANGE'] = -500
 
 # Total number of training steps
-gconfig['TRAIN_STEPS'] = 5000
+gconfig['TRAIN_STEPS'] = 10000
 
 # After some steps, we will update target network parameter using learning network/agent
-gconfig['UPDATE_STEPS'] = 500
+gconfig['UPDATE_STEPS'] = 400
 
 # We will updates some information like gradient and loss after some steps to help monitor the training process
-gconfig['LOG_STEPS'] = 10
+gconfig['MONITOR_STEPS'] = 10
+
+# Save the models to file every n steps
+gconfig['BACKUP_STEPS'] = 1000
+
+# The location to save model
+gconfig['BACKUP_LOCATION'] = path.join('bin', 'model.rl')
+
