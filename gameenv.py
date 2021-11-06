@@ -1,6 +1,24 @@
 from globalconfig import gconfig
+from gamedriver import SilentGameDriver2048
 import numpy as np
 from itertools import product
+
+
+
+def encode_board(board, chanels=gconfig['CHANEL_ENCODED']):
+    '''
+    Transform board to state observation
+    We will use one-hot encoded for each cell
+    board: board 4x4
+    chanels: length of one hot encoded vector
+    return numpy array of shape 16x4x4
+    '''
+    state = np.zeros((chanels, 4, 4))
+    for i, j in product(range(4), range(4)):
+        cell = board[i][j]
+        pos = int(np.log2(cell)) if cell > 0 else 0
+        state[pos, i, j] = 1
+    return state
 
 
 class GameEnv:
@@ -16,7 +34,6 @@ class GameEnv:
         self.score = 0
         self.state_space = (gconfig['CHANEL_ENCODED'], 4, 4)
         self.n_actions = 4
-
 
     def reset(self):
         '''
@@ -41,20 +58,41 @@ class GameEnv:
         score = self.driver.get_score()
         done = self.driver.is_end()
         # Process information
-        s = self.__process_board(board)
-        r = (score - self.score) * gconfig['REWARD_SCALE']        
+        s = encode_board(board, self.state_space[0])
+        r = (score - self.score - 4) * gconfig['REWARD_SCALE']        
         self.score = score
         return s, r, done
 
-    def __process_board(self, board):
+
+class EnvironementBatch:
+    ''' 
+    Batch of environment in A3C algorithm
+    '''
+    def __init__(self, n=gconfig['BATCH'], make_env=GameEnv, make_driver=SilentGameDriver2048):
         '''
-        Transform board to state observation
-        We will use one-hot encoded for each cell
-        return numpy array of shape 16x4x4
+        n: number of environments in batch
+        make_env: function to make environment
+        make_driver: function to make game driver
         '''
-        state = np.zeros(self.state_space)
-        for i, j in product(range(4), range(4)):
-            cell = board[i][j]
-            pos = pos = int(np.log2(cell)) if cell > 0 else 0
-            state[pos, i, j] = 1
-        return state
+        self.envs = [make_env(make_driver()) for i in range(n)]
+
+    def reset(self):
+        '''
+        Send reset signal to all environments in the batch
+        return batch of first states after reset
+        '''
+        return np.array([env.reset() for env in self.envs])
+
+    def step(self, actions):
+        """
+        Send actions to environments
+        actions: list of actions corresponding to each environment
+        return new_states, rewards, done
+        """
+        results = [env.step(a) for env, a in zip(self.envs, actions)]
+        new_obs, rewards, dones = map(np.array, zip(*results))
+        # reset environments automatically
+        for i in range(len(self.envs)):
+            if dones[i]:
+                new_obs[i] = self.envs[i].reset()
+        return new_obs, rewards, dones
