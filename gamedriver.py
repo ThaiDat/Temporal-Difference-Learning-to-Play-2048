@@ -39,6 +39,8 @@ def get_after_state(board, move):
         jterator = range(0, 4)
         di = 1
         dj = 0
+    else:
+        raise ValueError(str(move) + ' is not a valid move')
     # move
     score = 0
     modified = False
