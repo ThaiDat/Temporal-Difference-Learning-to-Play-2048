@@ -32,7 +32,6 @@ class GameEnv:
         '''
         self.driver = driver
         self.score = 0
-        self.state_space = (gconfig['CHANEL_ENCODED'], 4, 4)
         self.n_actions = 4
 
     def reset(self):
@@ -42,7 +41,7 @@ class GameEnv:
         '''
         self.driver.restart() if self.driver.connected else self.driver.connect()
         self.score = 0
-        return self.__process_board(self.driver.get_board())
+        return self.driver.get_board()
 
 
     def step(self, action):
@@ -58,10 +57,9 @@ class GameEnv:
         score = self.driver.get_score()
         done = self.driver.is_end()
         # Process information
-        s = encode_board(board, self.state_space[0])
         r = (score - self.score - 4) * gconfig['REWARD_SCALE']        
         self.score = score
-        return s, r, done
+        return board, r, done
 
 
 class EnvironementBatch:
