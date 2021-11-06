@@ -12,7 +12,7 @@ from itertools import product
 def get_after_state(board, move):
     '''
     Calculate the afterstate of board when making move
-    board: pure board presentation. Any modification will be made directly on the board
+    board: pure board representation. Any modification will be made directly on the board
     move: move to make
     return score gained by making the move, modification status
     '''

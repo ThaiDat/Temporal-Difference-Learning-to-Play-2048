@@ -9,7 +9,7 @@ def encode_board(board, chanels=gconfig['CHANEL_ENCODED']):
     '''
     Transform board to state observation
     We will use one-hot encoded for each cell
-    board: board 4x4
+    board: pure board representation
     chanels: length of one hot encoded vector
     return numpy array of shape 16x4x4
     '''
