@@ -58,7 +58,7 @@ def get_after_state(board, move):
             destj += dj
         # Move and merge
         if (desti <= top_walls[j] or bottom_walls[j] <= desti) or (destj <= left_walls[i] or right_walls[i] <= destj)\
-                or self.board[desti][destj] != self.board[i][j]:
+                or board[desti][destj] != board[i][j]:
             # we do replacement here, not directly assignment. Because there is case that tile did not move
             # If we assign tile to new pos and assign 0 to old pos (also new pos because cell did not move). Tile will be deleted
             t = board[desti-di][destj-dj]

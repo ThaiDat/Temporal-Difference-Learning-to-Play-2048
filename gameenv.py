@@ -79,7 +79,7 @@ class EnvironementBatch:
         Send reset signal to all environments in the batch
         return batch of first states after reset
         '''
-        return np.array([env.reset() for env in self.envs])
+        return [env.reset() for env in self.envs]
 
     def step(self, actions):
         """
@@ -88,7 +88,7 @@ class EnvironementBatch:
         return new_states, rewards, done
         """
         results = [env.step(a) for env, a in zip(self.envs, actions)]
-        new_obs, rewards, dones = map(np.array, zip(*results))
+        new_obs, rewards, dones = map(list, zip(*results))
         # reset environments automatically
         for i in range(len(self.envs)):
             if dones[i]:

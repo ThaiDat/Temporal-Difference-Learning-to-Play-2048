@@ -11,7 +11,7 @@ class Network(nn.Module):
         '''
         epsilon: initial value of epsilon greedy policy
         '''
-        super(Agent, self).__init__()
+        super(Network, self).__init__()
         self.hoz_conv = nn.Sequential(
             nn.Conv2d(16, 64, (2,1)), # 64x3x4
             nn.ReLU(),
@@ -42,7 +42,7 @@ class Network(nn.Module):
         self.v = nn.Sequential(
             nn.Linear(1024+1024+256, 1024), # 1024
             nn.ReLU(),
-            nn.Linear(1)
+            nn.Linear(1024, 1)
         )
 
     def forward(self, states):
@@ -63,13 +63,13 @@ class Model:
     '''
     Model of value function. Wrapper to train the network
     '''
-    def __init__(self, make_network=Network, optim=gconfig['OPTIMIZER'], lr=gconfig['LEARNING_RATE']):
+    def __init__(self, make_network=Network, device=gconfig['DEVICE'], optim=gconfig['OPTIMIZER'], lr=gconfig['LEARNING_RATE']):
         '''
         make_network: function or class to init network
         optim: Name of optimizer
         lr: Learning rate
         '''
-        self.network = make_network()
+        self.network = make_network().to(device)
         self.optim = getattr(torch.optim, optim)(self.network.parameters(), lr=lr)
 
     def predict(self, states):
