@@ -1,12 +1,12 @@
 from globalconfig import gconfig
 from abc import abstractmethod
 import time
-from random import choice
+from random import choice, random
 from itertools import product
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
+# from selenium import webdriver
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.action_chains import ActionChains
 
 
 class GameDriver2048:
@@ -276,4 +276,4 @@ class SilentGameDriver2048:
         if len(choices) == 0:
             return
         r, c = choice(choices)
-        self.board[r][c] = 2
+        self.board[r][c] = 2 if random() > 0.5 else 4
