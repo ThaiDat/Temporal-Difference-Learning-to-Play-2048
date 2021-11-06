@@ -9,6 +9,81 @@ from itertools import product
 # from selenium.webdriver.common.action_chains import ActionChains
 
 
+def get_after_state(board, move):
+    '''
+    Calculate the afterstate of board when making move
+    board: pure board presentation. Any modification will be made directly on the board
+    move: move to make
+    return score gained by making the move, modification status
+    '''
+    # direct
+    iterator = None; jterator = None
+    di = 0; dj = 0
+    if move == 0 or move == gconfig['ACTION_MAP'][0]:  # left
+        iterator = range(0, 4)
+        jterator = range(0, 4)
+        di = 0
+        dj = -1
+    elif move == 1 or move == gconfig['ACTION_MAP'][1]:  # up
+        iterator = range(0, 4)
+        jterator = range(0, 4)
+        di = -1
+        dj = 0
+    elif move == 2 or move == gconfig['ACTION_MAP'][2]:  # right
+        iterator = range(0, 4)
+        jterator = range(3, -1, -1)
+        di = 0
+        dj = 1
+    elif move == 3 or move == gconfig['ACTION_MAP'][3]:  # down
+        iterator = range(3, -1, -1)
+        jterator = range(0, 4)
+        di = 1
+        dj = 0
+    # move
+    score = 0
+    modified = False
+    left_walls = [-1] * 4
+    top_walls = [-1] * 4
+    right_walls = [4] * 4
+    bottom_walls = [4] * 4
+    for i, j in product(iterator, jterator):
+        if board[i][j] == 0:
+            continue
+        # Find destination
+        desti = i + di
+        destj = j + dj
+        while (top_walls[j] < desti and desti < bottom_walls[j]) and (left_walls[i] < destj and destj < right_walls[i])\
+                and board[desti][destj] == 0:
+            desti += di
+            destj += dj
+        # Move and merge
+        if (desti <= top_walls[j] or bottom_walls[j] <= desti) or (destj <= left_walls[i] or right_walls[i] <= destj)\
+                or self.board[desti][destj] != self.board[i][j]:
+            # we do replacement here, not directly assignment. Because there is case that tile did not move
+            # If we assign tile to new pos and assign 0 to old pos (also new pos because cell did not move). Tile will be deleted
+            t = board[desti-di][destj-dj]
+            board[desti-di][destj-dj] = board[i][j]
+            board[i][j] = t
+            modified = modified or t == 0
+        else:
+            board[desti][destj] += board[i][j]
+            board[i][j] = 0
+            modified = True
+            # Update the wall. so that, merged cell will not merge again
+            if desti > i:
+                bottom_walls[j] = desti
+            elif desti < i:
+                top_walls[j] = desti
+            if destj > j:
+                right_walls[i] = destj
+            elif destj < j:
+                left_walls[i] = destj
+            # update score
+            score += board[desti][destj]
+    # Put new tile after moved
+    return score, modified
+
+
 class GameDriver2048:
     '''
     Base class for game driver 2048
@@ -185,70 +260,8 @@ class SilentGameDriver2048:
 
     def make_move(self, move):
         '''Send move signal to game'''
-        # direct
-        iterator = None; jterator = None
-        di = 0; dj = 0
-        if move == 0 or move == gconfig['ACTION_MAP'][0]:  # left
-            iterator = range(0, 4)
-            jterator = range(0, 4)
-            di = 0
-            dj = -1
-        elif move == 1 or move == gconfig['ACTION_MAP'][1]:  # up
-            iterator = range(0, 4)
-            jterator = range(0, 4)
-            di = -1
-            dj = 0
-        elif move == 2 or move == gconfig['ACTION_MAP'][2]:  # right
-            iterator = range(0, 4)
-            jterator = range(3, -1, -1)
-            di = 0
-            dj = 1
-        elif move == 3 or move == gconfig['ACTION_MAP'][3]:  # down
-            iterator = range(3, -1, -1)
-            jterator = range(0, 4)
-            di = 1
-            dj = 0
-        # move
-        modified = False
-        left_walls = [-1] * 4
-        top_walls = [-1] * 4
-        right_walls = [4] * 4
-        bottom_walls = [4] * 4
-        for i, j in product(iterator, jterator):
-            if self.board[i][j] == 0:
-                continue
-            # Find destination
-            desti = i + di
-            destj = j + dj
-            while (top_walls[j] < desti and desti < bottom_walls[j]) and (left_walls[i] < destj and destj < right_walls[i])\
-                    and self.board[desti][destj] == 0:
-                desti += di
-                destj += dj
-            # Move and merge
-            if (desti <= top_walls[j] or bottom_walls[j] <= desti) or (destj <= left_walls[i] or right_walls[i] <= destj)\
-                    or self.board[desti][destj] != self.board[i][j]:
-                # we do replacement here, not directly assignment. Because there is case that tile did not move
-                # If we assign tile to new pos and assign 0 to old pos (also new pos because cell did not move). Tile will be deleted
-                t = self.board[desti-di][destj-dj]
-                self.board[desti-di][destj-dj] = self.board[i][j]
-                self.board[i][j] = t
-                modified = modified or t == 0
-            else:
-                self.board[desti][destj] += self.board[i][j]
-                self.board[i][j] = 0
-                modified = True
-                # Update the wall. so that, merged cell will not merge again
-                if desti > i:
-                    bottom_walls[j] = desti
-                elif desti < i:
-                    top_walls[j] = desti
-                if destj > j:
-                    right_walls[i] = destj
-                elif destj < j:
-                    left_walls[i] = destj
-                # update score
-                self.score += self.board[desti][destj]
-        # Put new tile after moved
+        score, modified = get_after_state(self.board, move)
+        self.score += score
         not modified or self.__put_random_new_tile()
 
     def restart(self):
