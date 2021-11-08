@@ -86,6 +86,21 @@ def get_after_state(board, move):
     return score, modified
 
 
+def check_terminal_board(board):
+    '''
+    Check whether board is terminal
+    return True if board is terminal (no possible state), false otherwise
+    '''
+    for i, j in product(range(4), range(4)):
+        tile = board[i][j]
+        if board[i][j] == 0 or \
+            (i + 1 < 4 and board[i+1][j] == tile) or\
+            (j + 1 < 4 and board[i][j+1] == tile):
+            return False
+    return True
+
+
+
 class GameDriver2048:
     '''
     Base class for game driver 2048
@@ -275,13 +290,7 @@ class SilentGameDriver2048:
 
     def is_end(self):
         '''Check gameover'''
-        for i, j in product(range(4), range(4)):
-            tile = self.board[i][j]
-            if self.board[i][j] == 0 or \
-                (i + 1 < 4 and self.board[i+1][j] == tile) or\
-                (j + 1 < 4 and self.board[i][j+1] == tile):
-                return False
-        return True
+        return check_terminal_board(self.board)
 
     def __put_random_new_tile(self):
         '''
@@ -291,4 +300,4 @@ class SilentGameDriver2048:
         if len(choices) == 0:
             return
         r, c = choice(choices)
-        self.board[r][c] = 2 if random() > 0.5 else 4
+        self.board[r][c] = 2 if random() < 0.9 else 4

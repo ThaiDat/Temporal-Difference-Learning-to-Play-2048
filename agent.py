@@ -15,32 +15,32 @@ class Network(nn.Module):
         self.hoz_conv = nn.Sequential(
             nn.Conv2d(16, 64, (2,1)), # 64x3x4
             nn.ReLU(),
-            nn.Conv2d(64, 128, (2, 1)), # 128x2x4
+            nn.Conv2d(64, 256, (2, 1)), # 256x2x4
             nn.ReLU(),
-            nn.Conv2d(128, 256, (2, 1)), # 256x1x4
+            nn.Conv2d(256, 1024, (2, 1)), # 1024x1x4
             nn.ReLU(),
-            nn.Flatten(), # 1024
+            nn.Flatten(), # 4096
         )
         self.ver_conv = nn.Sequential(
             nn.Conv2d(16, 64, (1, 2)), # 64x4x3
             nn.ReLU(),
-            nn.Conv2d(64, 128, (1, 2)), # 128x4x2
+            nn.Conv2d(64, 256, (1, 2)), # 256x4x2
             nn.ReLU(),
-            nn.Conv2d(128, 256, (1, 2)), # 256x4x1
+            nn.Conv2d(256, 1024, (1, 2)), # 1024x4x1
             nn.ReLU(),
-            nn.Flatten(), # 1024
+            nn.Flatten(), # 4096
         )
         self.box_conv = nn.Sequential(
             nn.Conv2d(16, 64, 2), # 64x3x3
             nn.ReLU(),
-            nn.Conv2d(64, 128, 2), # 128x2x2
+            nn.Conv2d(64, 256, 2), # 256x2x2
             nn.ReLU(),
-            nn.Conv2d(128, 256, 2), # 256x1x2
+            nn.Conv2d(256, 1024, 2), # 1024x1x1
             nn.ReLU(),
-            nn.Flatten(), # 256
+            nn.Flatten(), # 1024
         )
         self.v = nn.Sequential(
-            nn.Linear(1024+1024+256, 1024), # 1024
+            nn.Linear(4096+4096+1024, 1024), # 1024
             nn.ReLU(),
             nn.Linear(1024, 1)
         )
@@ -88,9 +88,10 @@ class Model:
         values: tensor of state values. batch
         return loss, gradient values
         '''
-        pr = self.network(states)
         self.optim.zero_grad()
+        pr = self.network(states)
         loss = F.smooth_l1_loss(pr, values)
+        loss.backward()
         grad_norm = utils.clip_grad_norm_(self.network.parameters(), max_grad_norm)
         self.optim.step()
         return loss.cpu().item(), grad_norm.cpu().item()

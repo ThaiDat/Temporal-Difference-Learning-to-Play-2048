@@ -57,7 +57,8 @@ class GameEnv:
         score = self.driver.get_score()
         done = self.driver.is_end()
         # Process information
-        r = (score - self.score - 4) * gconfig['REWARD_SCALE']        
+        # r = int(np.max(board) > old_max)
+        r = (score - self.score) * gconfig['REWARD_SCALE']
         self.score = score
         return board, r, done
 
