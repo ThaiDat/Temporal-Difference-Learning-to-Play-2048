@@ -106,7 +106,7 @@ if __name__=='__main__':
             axs[1][1].plot(history_score)
             axs[1][1].set_title('Score')
             fig.canvas.draw()
-            fig.canvas.flush_event()           
+            fig.canvas.flush_events()           
 
         # Back-up
         if i % gconfig['BACKUP_STEPS'] == 0:
