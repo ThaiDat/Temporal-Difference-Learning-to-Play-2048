@@ -5,13 +5,13 @@ from torch.nn import functional as F
 from torch.nn import utils
 
 
-class Network(nn.Module):
+class NeuralNetwork(nn.Module):
     '''Pytorch network to learn values function'''
     def __init__(self):
         '''
         epsilon: initial value of epsilon greedy policy
         '''
-        super(Network, self).__init__()
+        super(NeuralNetwork, self).__init__()
         self.hoz_conv = nn.Sequential(
             nn.Conv2d(16, 64, (2,1)), # 64x3x4
             nn.ReLU(),
@@ -59,11 +59,11 @@ class Network(nn.Module):
         return v
 
 
-class Model:
+class NeuralNetworkModel:
     '''
     Model of value function. Wrapper to train the network
     '''
-    def __init__(self, make_network=Network, device=gconfig['DEVICE'], optim=gconfig['OPTIMIZER'], lr=gconfig['LEARNING_RATE']):
+    def __init__(self, make_network=NeuralNetwork, device=gconfig['DEVICE'], optim=gconfig['OPTIMIZER'], lr=gconfig['LEARNING_RATE']):
         '''
         make_network: function or class to init network
         optim: Name of optimizer
