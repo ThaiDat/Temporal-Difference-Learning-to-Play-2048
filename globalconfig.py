@@ -19,7 +19,7 @@ gconfig['GAME_URL'] = 'https://2048game.com'
 gconfig['ACTION_MAP'] = {0:'LEFT', 1:'UP', 2:'RIGHT', 3:'DOWN'}
 
 # Sleep time after sending action to the game
-# This is for avoiding error when you paly too fast
+# This is for avoiding error when you play too fast
 gconfig['ACTION_SLEEP'] = 0.1
 
 # Scale the reward for the q-value approximator not to learn too big values
@@ -32,7 +32,7 @@ gconfig['BATCH'] = 4
 gconfig['OPTIMIZER'] = 'Adam'
 
 # Learning rate of model
-gconfig['LEARNING_RATE'] = 1e-4
+gconfig['LEARNING_RATE'] = 1e-2
 
 # Clip the gradient norm to this number.
 gconfig['MAX_GRADIENT_NORM'] = 100
@@ -64,3 +64,10 @@ gconfig['EVALUATE_STEPS'] = 1000
 # The location to save model
 gconfig['BACKUP_LOCATION'] = path.join('bin', 'model.rl')
 
+# Define patterns of weightless network
+gconfig['NTUPLES'] = [
+    [(0,0), (0,1), (0,2), (0,3), (1,0), (1,1)],
+    [(1,0), (1,1), (1,2), (1,3), (2,0), (2,1)],
+    [(0,0), (0,1), (0,2), (1,0), (1,1), (1,2)],
+    [(1,0), (1,1), (1,2), (2,0), (2,1), (2,2)],
+]
