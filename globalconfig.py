@@ -41,7 +41,7 @@ gconfig['MAX_GRADIENT_NORM'] = 100
 gconfig['CHANEL_ENCODED'] = 16
 
 # Device to train network on. cuda or cpu
-gconfig['DEVICE'] = 'cpu'
+gconfig['DEVICE'] = 'cuda'
 
 # Discounted factor gamma in Bellman (optimality) equation. How reward in later states affect the current one
 gconfig['DISCOUNTED'] = 0.8
