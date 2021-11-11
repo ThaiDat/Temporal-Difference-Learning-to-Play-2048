@@ -12,7 +12,7 @@ class NTuple:
         self.pattern = pattern
         self.table = np.zeros((chanel_encoded,) * len(pattern), dtype=np.float32)
 
-    def look_up(board):
+    def look_up(self, board):
         '''
         Rotate and flip pattern to assess board
         board: pure board representation
@@ -45,6 +45,7 @@ class NTuple:
         board = np.array(board)
         board[board==0] = 1
         board = np.log2(board).astype(np.int32)
+        return board
 
     def __flip_rotate_board(self, board):
         '''

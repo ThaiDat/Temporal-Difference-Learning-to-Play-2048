@@ -1,5 +1,7 @@
 from globalconfig import gconfig
 from gamedriver import get_after_state, check_terminal_board
+from itertools import product
+import numpy as np
 
 
 def get_possible_new_states(state, terminal_included=False):
