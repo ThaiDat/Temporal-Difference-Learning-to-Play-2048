@@ -23,7 +23,7 @@ gconfig['ACTION_MAP'] = {0:'LEFT', 1:'UP', 2:'RIGHT', 3:'DOWN'}
 gconfig['ACTION_SLEEP'] = 0.1
 
 # Scale the reward for the q-value approximator not to learn too big values
-gconfig['REWARD_SCALE'] = 1/128
+gconfig['REWARD_SCALE'] = 1/256
 
 # Number of environments / batch size in A3C
 gconfig['BATCH'] = 4
@@ -32,7 +32,7 @@ gconfig['BATCH'] = 4
 gconfig['OPTIMIZER'] = 'Adam'
 
 # Learning rate of model
-gconfig['LEARNING_RATE'] = 1e-2
+gconfig['LEARNING_RATE'] = 1e-1
 
 # Clip the gradient norm to this number.
 gconfig['MAX_GRADIENT_NORM'] = 100
@@ -44,22 +44,25 @@ gconfig['CHANEL_ENCODED'] = 16
 gconfig['DEVICE'] = 'cpu'
 
 # Discounted factor gamma in Bellman (optimality) equation. How reward in later states affect the current one
-gconfig['DISCOUNTED'] = 0.8
+gconfig['DISCOUNTED'] = 0.9
 
 # We will just monitor some number of last steps. For example -500 means that only last 500 steps will display on the screen
 gconfig['MONITOR_RANGE'] = -1000
 
 # Total number of training steps
-gconfig['TRAIN_STEPS'] = 1_000_000
+gconfig['TRAIN_STEPS'] = 10_000_000
 
 # We will updates some information like gradient and loss after some steps to help monitor the training process
-gconfig['MONITOR_STEPS'] = 1000
+gconfig['MONITOR_STEPS'] = 5000
 
 # Save the models to file every n steps
-gconfig['BACKUP_STEPS'] = 10_000
+gconfig['BACKUP_STEPS'] = 40_000
 
 # Evaluate the agent every n steps
-gconfig['EVALUATE_STEPS'] = 1000
+gconfig['EVALUATE_STEPS'] = 40_000
+
+# Number of evaluation games after n steps in during training
+gconfig['EVALUATE_GAMES'] = 10
 
 # The location to save model
 gconfig['BACKUP_LOCATION'] = path.join('bin', 'model.rl')
