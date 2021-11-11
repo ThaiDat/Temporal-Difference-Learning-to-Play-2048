@@ -1,7 +1,9 @@
 from globalconfig import gconfig
 from gamedriver import get_after_state, check_terminal_board
+from gameenv import encode_board
 from itertools import product
 import numpy as np
+import torch
 
 
 def get_possible_new_states(state, terminal_included=False):
@@ -33,12 +35,13 @@ def get_possible_new_states(state, terminal_included=False):
     return new_states, probs
 
 
-def plan(states, vf, gamma=gconfig['DISCOUNTED']):
+def plan(states, vf, gamma=gconfig['DISCOUNTED'], device=gconfig['DEVICE']):
     '''
     Plan and select the best move with the help of network
     states: batch of pure board representation
     vf: state value function. Should be a Model (see agent.py)
     gamma: discounted factor how next state affect current states.
+    device: Device of the value function
     return batch of actions corresponding to states, batch value function corresponding to state (which is equal to action value function of optimal action)
     '''
     actions = []
@@ -46,6 +49,7 @@ def plan(states, vf, gamma=gconfig['DISCOUNTED']):
     for state in states:
         best_a = None
         best_v = float('-inf')
+        max_tile = np.max(state)
         # Try all actions
         for a in range(4):
             afterstate = [row[:] for row in state]
@@ -57,7 +61,9 @@ def plan(states, vf, gamma=gconfig['DISCOUNTED']):
             new_states, probs = get_possible_new_states(afterstate)
             next_v = 0
             if len(new_states) > 0:
-                next_v = vf.predict(new_states)
+                encoded_new_states = np.array([encode_board(s) for s in new_states])
+                encoded_new_states = torch.tensor(encoded_new_states, device=device, dtype=torch.float)
+                next_v = vf.predict(encoded_new_states).cpu().numpy()
                 next_v = (probs @ next_v).item()
             v = reward + gamma * next_v
             if v >= best_v:

@@ -1,97 +1,110 @@
 from globalconfig import gconfig
-import torch
-from torch import nn
-from torch.nn import functional as F
-from torch.nn import utils
+import numpy as np
 
 
-class NeuralNetwork(nn.Module):
-    '''Pytorch network to learn values function'''
-    def __init__(self):
+class NTuple:
+    '''Most basic element of weightless network'''
+    def __init__(self, pattern, chanel_encoded=gconfig['CHANEL_ENCODED']):
         '''
-        epsilon: initial value of epsilon greedy policy
+        pattern: list of position (row, col) for pattern recognizer
+        chanel_encoded: Length of one hot encoded vector of each tile
         '''
-        super(NeuralNetwork, self).__init__()
-        self.hoz_conv = nn.Sequential(
-            nn.Conv2d(16, 64, (2,1)), # 64x3x4
-            nn.ReLU(),
-            nn.Conv2d(64, 256, (2, 1)), # 256x2x4
-            nn.ReLU(),
-            nn.Conv2d(256, 1024, (2, 1)), # 1024x1x4
-            nn.ReLU(),
-            nn.Flatten(), # 4096
-        )
-        self.ver_conv = nn.Sequential(
-            nn.Conv2d(16, 64, (1, 2)), # 64x4x3
-            nn.ReLU(),
-            nn.Conv2d(64, 256, (1, 2)), # 256x4x2
-            nn.ReLU(),
-            nn.Conv2d(256, 1024, (1, 2)), # 1024x4x1
-            nn.ReLU(),
-            nn.Flatten(), # 4096
-        )
-        self.box_conv = nn.Sequential(
-            nn.Conv2d(16, 64, 2), # 64x3x3
-            nn.ReLU(),
-            nn.Conv2d(64, 256, 2), # 256x2x2
-            nn.ReLU(),
-            nn.Conv2d(256, 1024, 2), # 1024x1x1
-            nn.ReLU(),
-            nn.Flatten(), # 1024
-        )
-        self.v = nn.Sequential(
-            nn.Linear(4096+4096+1024, 1024), # 1024
-            nn.ReLU(),
-            nn.Linear(1024, 1)
-        )
+        self.pattern = pattern
+        self.table = np.zeros((chanel_encoded,) * len(pattern), dtype=np.float32)
 
-    def forward(self, states):
+    def look_up(self, board):
         '''
-        Forward the states tensor to receive tensor of qvalues
-        states: tensor of states batch x 16x4x4
-        return logit and state values
+        Rotate and flip pattern to assess board
+        board: pure board representation
+        return board value function
         '''
-        hoz = self.hoz_conv(states) 
-        ver = self.ver_conv(states)
-        box = self.box_conv(states)
-        fs = torch.cat((hoz, ver, box), -1)
-        v = self.v(fs)
+        boards = self.__flip_rotate_board(self.__preprocess_board(board))
+        v = 0
+        for board in boards:
+            indices =tuple(board[r, c] for r, c in self.pattern)
+            v += self.table[indices]
         return v
+            
+    def update(self, board, update_value):
+        '''
+        Update assessment for given board
+        board: pure board representation
+        '''
+        boards = self.__flip_rotate_board(self.__preprocess_board(board))
+        update_value /= 8
+        for board in boards:
+            indices =tuple(board[r, c] for r, c in self.pattern)
+            self.table[indices] += update_value
+    
+    def __preprocess_board(self, board):
+        '''
+        Convert pure board representation to board of indices
+        board: pure board representation
+        return np array board of indices
+        '''
+        board = np.array(board)
+        board[board==0] = 1
+        board = np.log2(board).astype(np.int32)
+        return board
+
+    def __flip_rotate_board(self, board):
+        '''
+        Do the flip and rotation on board to get the same effect of pattern
+        board: numpy array board
+        return list of board variations
+        '''
+        board_flip = board[:, ::-1]
+        variations = [
+            board,
+            np.rot90(board, 1, (0, 1)),
+            np.rot90(board, 2, (0, 1)),
+            np.rot90(board, 3, (0, 1)),
+            board_flip,
+            np.rot90(board_flip, 1, (0, 1)),
+            np.rot90(board_flip, 2, (0, 1)),
+            np.rot90(board_flip, 3, (0, 1)),
+        ]
+        return variations
 
 
-class NeuralNetworkModel:
-    '''
-    Model of value function. Wrapper to train the network
-    '''
-    def __init__(self, make_network=NeuralNetwork, device=gconfig['DEVICE'], optim=gconfig['OPTIMIZER'], lr=gconfig['LEARNING_RATE']):
+class WeightlessNetworkModel:
+    '''Model of value function using weightless network'''
+    def __init__(self, patterns=gconfig['NTUPLES'], lr=gconfig['LEARNING_RATE']):
         '''
-        make_network: function or class to init network
-        optim: Name of optimizer
-        lr: Learning rate
-        '''
-        self.network = make_network().to(device)
-        self.optim = getattr(torch.optim, optim)(self.network.parameters(), lr=lr)
+        patterns: matrix of N x ntuples. Define how to create ntuples
+        '''        
+        self.patterns = [NTuple(pattern) for pattern in patterns]
+        self.lr = lr
 
     def predict(self, states):
         '''
         Predict values of given states
-        states: tensor of encoded states. batch x16x4x4
-        return state values batch
+        states: list of pure board representation
+        return values of corresponding states
         '''
-        with torch.no_grad():
-            return self.network(states)
-    
-    def fit(self, states, values, max_grad_norm=gconfig['MAX_GRADIENT_NORM']):
+        return [np.sum([p.look_up(state) for p in self.patterns]) for state in states]
+
+    def fit(self, states, values):
         '''
         Train the network with given datas
-        states: tensor of encoded states. batch x16x4x4
-        values: tensor of state values. batch
-        return loss, gradient values
+        states: list of pure board representations
+        values: list of state values
+        return mean loss
         '''
-        self.optim.zero_grad()
-        pr = self.network(states)
-        loss = F.smooth_l1_loss(pr, values)
-        loss.backward()
-        grad_norm = utils.clip_grad_norm_(self.network.parameters(), max_grad_norm)
-        self.optim.step()
-        return loss.cpu().item(), grad_norm.cpu().item()
+        current_values = self.predict(states)
+        updates = np.subtract(values, current_values)
+        self.fit_update(states, updates)
+        return np.mean(np.square(updates))
+        
+    def fit_update(self, states, updates):
+        '''
+        Train the network with pre-calculated updates
+        states: list of pure board representations
+        updates: list of directions of each update. Normally old_value -> new_value
+        '''
+        for state, update in zip(states, updates):
+            update = update * self.lr / len(self.patterns)
+            for pattern in self.patterns:
+                pattern.update(state, update)
+            
+            
