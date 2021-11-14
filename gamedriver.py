@@ -3,10 +3,10 @@ from abc import abstractmethod
 import time
 from random import choice, random
 from itertools import product
-# from selenium import webdriver
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.action_chains import ActionChains
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 def get_after_state(board, move):
