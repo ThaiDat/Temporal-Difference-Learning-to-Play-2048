@@ -1,0 +1,2 @@
+*.rl filter=lfs diff=lfs merge=lfs -text
+*.pasrl filter=lfs diff=lfs merge=lfs -text

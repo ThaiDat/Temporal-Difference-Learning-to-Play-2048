@@ -23,7 +23,7 @@ gconfig['ACTION_MAP'] = {0:'LEFT', 1:'UP', 2:'RIGHT', 3:'DOWN'}
 gconfig['ACTION_SLEEP'] = 0.1
 
 # Scale the reward for the q-value approximator not to learn too big values
-gconfig['REWARD_SCALE'] = 1/256
+gconfig['REWARD_SCALE'] = 1
 
 # Number of environments / batch size in A3C
 gconfig['BATCH'] = 4
@@ -66,6 +66,9 @@ gconfig['EVALUATE_GAMES'] = 10
 
 # The location to save model
 gconfig['BACKUP_LOCATION'] = path.join('bin', 'model.rl')
+
+# Model for testing
+gconfig['TEST_MODEL_FILE'] = path.join('bin', 'modelpas.rl')
 
 # Define patterns of weightless network
 gconfig['NTUPLES'] = [
