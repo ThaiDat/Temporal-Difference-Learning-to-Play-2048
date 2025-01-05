@@ -1,0 +1,290 @@
+Trained 0 steps in 0.12963675100000005 seconds
+    Maximum tile reached while training: 4
+    Evaluate 10 games in 29.708009052 seconds
+    Score - Min:1160, Max:6104, Mean:2663.60
+    Max tiles - 64:10.0% , 128:40.0% , 256:40.0% , 512:10.0% , 
+Trained 40000 steps in 2069.9996026259996 seconds
+    Maximum tile reached while training: 1024
+    Evaluate 10 games in 55.9148723430003 seconds
+    Score - Min:3060, Max:15008, Mean:6889.20
+    Max tiles - 256:20.0% , 512:60.0% , 1024:20.0% , 
+Trained 80000 steps in 2135.862335243 seconds
+    Maximum tile reached while training: 1024
+    Evaluate 10 games in 53.935003589999724 seconds
+    Score - Min:1756, Max:14064, Mean:6413.60
+    Max tiles - 128:10.0% , 256:30.0% , 512:40.0% , 1024:20.0% , 
+Trained 120000 steps in 2066.341012506 seconds
+    Maximum tile reached while training: 1024
+    Evaluate 10 games in 62.660496933000104 seconds
+    Score - Min:3200, Max:15104, Mean:8228.80
+    Max tiles - 256:20.0% , 512:50.0% , 1024:30.0% , 
+Trained 160000 steps in 2030.2152403380005 seconds
+    Maximum tile reached while training: 1024
+    Evaluate 10 games in 37.36781688100018 seconds
+    Score - Min:1336, Max:6844, Mean:3982.80
+    Max tiles - 128:30.0% , 256:30.0% , 512:40.0% , 
+Trained 200000 steps in 2018.8545810779997 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 49.54317230699962 seconds
+    Score - Min:3056, Max:14028, Mean:6159.60
+    Max tiles - 256:40.0% , 512:50.0% , 1024:10.0% , 
+Trained 240000 steps in 2026.2032474710002 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 36.22672546199988 seconds
+    Score - Min:1740, Max:6924, Mean:4018.00
+    Max tiles - 128:10.0% , 256:60.0% , 512:30.0% , 
+Trained 280000 steps in 2004.6500916109999 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 48.10074258400027 seconds
+    Score - Min:1712, Max:8544, Mean:5819.60
+    Max tiles - 128:10.0% , 256:20.0% , 512:70.0% , 
+Trained 320000 steps in 2016.099205736 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 38.27580505300011 seconds
+    Score - Min:1104, Max:10508, Mean:4341.20
+    Max tiles - 128:20.0% , 256:50.0% , 512:20.0% , 1024:10.0% , 
+Trained 360000 steps in 2020.995402945 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 47.38873892999982 seconds
+    Score - Min:2532, Max:11520, Mean:5620.80
+    Max tiles - 256:50.0% , 512:30.0% , 1024:20.0% , 
+Trained 400000 steps in 2008.3054872680004 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 48.44607384200026 seconds
+    Score - Min:2408, Max:15328, Mean:5894.80
+    Max tiles - 256:40.0% , 512:50.0% , 1024:10.0% , 
+Trained 440000 steps in 1936.0307042499999 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 39.739722696999934 seconds
+    Score - Min:1528, Max:7856, Mean:4648.80
+    Max tiles - 128:10.0% , 256:50.0% , 512:40.0% , 
+Trained 480000 steps in 1919.998208961 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 54.73373615299988 seconds
+    Score - Min:1340, Max:15148, Mean:7238.40
+    Max tiles - 128:10.0% , 256:10.0% , 512:60.0% , 1024:20.0% , 
+Trained 520000 steps in 1916.217859802 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 45.12268201999996 seconds
+    Score - Min:2284, Max:14452, Mean:5677.60
+    Max tiles - 256:30.0% , 512:60.0% , 1024:10.0% , 
+Trained 560000 steps in 1906.4206253800003 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 40.26449646000037 seconds
+    Score - Min:2368, Max:7500, Mean:4804.80
+    Max tiles - 256:50.0% , 512:50.0% , 
+Trained 600000 steps in 1917.6883258649987 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 47.24920080600168 seconds
+    Score - Min:3232, Max:12708, Mean:6303.60
+    Max tiles - 256:20.0% , 512:70.0% , 1024:10.0% , 
+Trained 640000 steps in 4961.182690351 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 76.33207870299975 seconds
+    Score - Min:2356, Max:7384, Mean:4800.40
+    Max tiles - 256:50.0% , 512:50.0% , 
+Trained 680000 steps in 1612.125 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 42.90625 seconds
+    Score - Min:5424, Max:27872, Mean:10423.60
+    Max tiles - 512:60.0% , 1024:30.0% , 2048:10.0% , 
+Trained 720000 steps in 1411.3125 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 40.03125 seconds
+    Score - Min:4704, Max:10520, Mean:7167.60
+    Max tiles - 512:80.0% , 1024:20.0% , 
+Trained 760000 steps in 1697.28125 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 39.515625 seconds
+    Score - Min:2732, Max:12276, Mean:5792.00
+    Max tiles - 256:40.0% , 512:50.0% , 1024:10.0% , 
+Trained 800000 steps in 1692.46875 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 56.84375 seconds
+    Score - Min:3064, Max:10368, Mean:6586.80
+    Max tiles - 256:30.0% , 512:50.0% , 1024:20.0% , 
+Trained 840000 steps in 1709.09375 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 33.21875 seconds
+    Score - Min:3152, Max:10956, Mean:6260.80
+    Max tiles - 256:20.0% , 512:70.0% , 1024:10.0% , 
+Trained 880000 steps in 1792.859375 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 49.453125 seconds
+    Score - Min:3196, Max:11388, Mean:6003.60
+    Max tiles - 256:30.0% , 512:60.0% , 1024:10.0% , 
+Trained 920000 steps in 1890.765625 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 51.609375 seconds
+    Score - Min:3096, Max:15636, Mean:6463.20
+    Max tiles - 256:30.0% , 512:60.0% , 1024:10.0% , 
+Trained 960000 steps in 1514.046875 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 27.703125 seconds
+    Score - Min:1444, Max:6664, Mean:4760.40
+    Max tiles - 128:10.0% , 256:40.0% , 512:50.0% , 
+Trained 1000000 steps in 1285.75 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 32.015625 seconds
+    Score - Min:1352, Max:14756, Mean:5865.60
+    Max tiles - 128:10.0% , 256:20.0% , 512:60.0% , 1024:10.0% , 
+Trained 1040000 steps in 1293.984375 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 35.65625 seconds
+    Score - Min:3180, Max:14340, Mean:7264.40
+    Max tiles - 256:10.0% , 512:80.0% , 1024:10.0% , 
+Trained 1080000 steps in 1358.71875 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 32.625 seconds
+    Score - Min:2836, Max:12260, Mean:6120.00
+    Max tiles - 256:20.0% , 512:70.0% , 1024:10.0% , 
+Trained 1120000 steps in 1514.5625 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 58.46875 seconds
+    Score - Min:3256, Max:18300, Mean:7872.00
+    Max tiles - 256:20.0% , 512:60.0% , 1024:20.0% , 
+Trained 1160000 steps in 3424.10721608 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 99.67356648000032 seconds
+    Score - Min:3112, Max:12524, Mean:7361.60
+    Max tiles - 256:10.0% , 512:70.0% , 1024:20.0% , 
+Trained 1200000 steps in 3407.1072047999996 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 120.46590931999981 seconds
+    Score - Min:5356, Max:18392, Mean:10406.40
+    Max tiles - 512:50.0% , 1024:50.0% , 
+Trained 1240000 steps in 3391.8974188 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 81.24330983999971 seconds
+    Score - Min:2900, Max:12436, Mean:5524.00
+    Max tiles - 256:50.0% , 512:40.0% , 1024:10.0% , 
+Trained 1280000 steps in 3387.4392773199997 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 89.7879780000003 seconds
+    Score - Min:2992, Max:12224, Mean:6841.60
+    Max tiles - 256:40.0% , 512:30.0% , 1024:30.0% , 
+Trained 1320000 steps in 3382.4858682800004 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 104.22178028000053 seconds
+    Score - Min:3088, Max:15368, Mean:7936.40
+    Max tiles - 256:10.0% , 512:70.0% , 1024:20.0% , 
+Trained 1360000 steps in 3377.159576440001 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 116.43580499999734 seconds
+    Score - Min:5304, Max:16088, Mean:9607.20
+    Max tiles - 512:50.0% , 1024:50.0% , 
+Trained 1400000 steps in 3432.2123732 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 102.61474676000216 seconds
+    Score - Min:3188, Max:16056, Mean:7512.00
+    Max tiles - 256:10.0% , 512:80.0% , 1024:10.0% , 
+Trained 1440000 steps in 3446.8233884799993 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 102.32382323999991 seconds
+    Score - Min:3168, Max:16096, Mean:8038.80
+    Max tiles - 256:10.0% , 512:60.0% , 1024:30.0% , 
+Trained 1480000 steps in 3397.8606882400018 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 98.51824983999904 seconds
+    Score - Min:3132, Max:15328, Mean:7618.00
+    Max tiles - 256:20.0% , 512:60.0% , 1024:20.0% , 
+Trained 1520000 steps in 3386.7341918400016 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 92.97382339999604 seconds
+    Score - Min:3072, Max:12404, Mean:6616.40
+    Max tiles - 256:30.0% , 512:50.0% , 1024:20.0% , 
+Trained 1560000 steps in 3440.3554768 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 101.25438008000037 seconds
+    Score - Min:3020, Max:16248, Mean:7561.60
+    Max tiles - 256:10.0% , 512:70.0% , 1024:20.0% , 
+Trained 1600000 steps in 3376.39429084 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 120.96021615999962 seconds
+    Score - Min:5384, Max:15776, Mean:9901.20
+    Max tiles - 512:60.0% , 1024:40.0% , 
+Trained 1640000 steps in 3422.8110849600007 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 103.9161035599991 seconds
+    Score - Min:3044, Max:14632, Mean:7882.40
+    Max tiles - 256:10.0% , 512:70.0% , 1024:20.0% , 
+Trained 1680000 steps in 3423.1177682 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 120.78565684000023 seconds
+    Score - Min:5324, Max:15484, Mean:9944.40
+    Max tiles - 512:50.0% , 1024:50.0% , 
+Trained 1720000 steps in 3430.150145640002 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 103.50933299999815 seconds
+    Score - Min:3276, Max:12592, Mean:7614.00
+    Max tiles - 256:20.0% , 512:50.0% , 1024:30.0% , 
+Trained 1760000 steps in 3400.239475120001 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 97.72484243999861 seconds
+    Score - Min:2784, Max:12176, Mean:7120.80
+    Max tiles - 256:20.0% , 512:60.0% , 1024:20.0% , 
+Trained 1800000 steps in 3459.3742804400026 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 108.46303368000008 seconds
+    Score - Min:3416, Max:16084, Mean:8730.80
+    Max tiles - 256:10.0% , 512:50.0% , 1024:40.0% , 
+Trained 1840000 steps in 3431.4513082799967 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 128.84064620000208 seconds
+    Score - Min:5408, Max:21660, Mean:10647.60
+    Max tiles - 512:50.0% , 1024:40.0% , 2048:10.0% , 
+Trained 1880000 steps in 3402.593964519998 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 110.46658308000042 seconds
+    Score - Min:2980, Max:14576, Mean:9112.40
+    Max tiles - 256:20.0% , 512:30.0% , 1024:50.0% , 
+Trained 1920000 steps in 3417.8320684000028 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 116.96322703999613 seconds
+    Score - Min:1420, Max:16060, Mean:9373.20
+    Max tiles - 128:10.0% , 256:0.0% , 512:40.0% , 1024:50.0% , 
+Trained 1960000 steps in 3429.58976504 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 83.8165506400037 seconds
+    Score - Min:3036, Max:7372, Mean:5124.80
+    Max tiles - 256:40.0% , 512:60.0% , 
+Trained 2000000 steps in 1674.203125 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 45.109375 seconds
+    Score - Min:3072, Max:14516, Mean:7878.80
+    Max tiles - 256:20.0% , 512:50.0% , 1024:30.0% , 
+Trained 2040000 steps in 1834.46875 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 62.25 seconds
+    Score - Min:5468, Max:15456, Mean:9516.80
+    Max tiles - 512:60.0% , 1024:40.0% , 
+Trained 2080000 steps in 1950.515625 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 52.25 seconds
+    Score - Min:3068, Max:16312, Mean:7325.20
+    Max tiles - 256:20.0% , 512:60.0% , 1024:20.0% , 
+Trained 2120000 steps in 1903.03125 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 51.125 seconds
+    Score - Min:2780, Max:12904, Mean:7323.60
+    Max tiles - 256:20.0% , 512:50.0% , 1024:30.0% , 
+Trained 2160000 steps in 1761.21875 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 69.484375 seconds
+    Score - Min:3244, Max:16144, Mean:9137.20
+    Max tiles - 256:10.0% , 512:50.0% , 1024:40.0% , 
+Trained 2200000 steps in 1354.0625 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 33.484375 seconds
+    Score - Min:1332, Max:13716, Mean:5539.60
+    Max tiles - 128:10.0% , 256:40.0% , 512:40.0% , 1024:10.0% , 
+Trained 2240000 steps in 1415.765625 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 45.6875 seconds
+    Score - Min:5388, Max:15420, Mean:8761.20
+    Max tiles - 512:70.0% , 1024:30.0% , 
+Trained 2280000 steps in 1377.390625 seconds
+    Maximum tile reached while training: 2048
+    Evaluate 10 games in 39.25 seconds
+    Score - Min:3080, Max:14980, Mean:7504.00
+    Max tiles - 256:20.0% , 512:60.0% , 1024:20.0% , 
